@@ -14,7 +14,7 @@
 
     <script mode="module">
 
-        const stripe = Stripe('pk_test_51OITe6BluycJgrduPBhi7wanOVMbAx7xu0P734602Mhz7IEEMuyjxiGTfjQva4bNOa4P1IMwai2RxXVUwqQhK2rP00nPJRhW4Y');
+        const stripe = Stripe('STRIPE_PUBLIC_KEY');
         const buyButtons = document.querySelectorAll('.buy-button');
         buyButtons.forEach(button => {
             button.addEventListener('click', async () => {
