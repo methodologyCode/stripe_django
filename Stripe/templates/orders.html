@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Orders</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h1>Заказы</h1>
+
+    {% for item in orders %}
+        <p>Заказ номер: {{ item.id }}</p>
+        <button id="buy-button" class="buy-button" data-item-id="{{ item.id }}">Buy</button>
+    {% endfor %}
+
+    <script mode="module">
+
+        const stripe = Stripe('pk_test_51OITe6BluycJgrduPBhi7wanOVMbAx7xu0P734602Mhz7IEEMuyjxiGTfjQva4bNOa4P1IMwai2RxXVUwqQhK2rP00nPJRhW4Y');
+        const buyButtons = document.querySelectorAll('.buy-button');
+        buyButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+                const orderId = button.getAttribute('data-item-id');
+                const response = await fetch(`/payment/${orderId}/`);
+                const data = await response.json();
+                stripe.redirectToCheckout({ sessionId: data.session_id });
+            });
+        });
+    </script>
+</body>
+</html>
